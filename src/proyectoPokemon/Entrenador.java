@@ -1,17 +1,20 @@
 package proyectoPokemon;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
+import baseDeDatos.Movimiento;
 import factoriaPokemon.FactoriaPokemon;
 import factoriaPokemon.GenerarPokemon;
 import mvp.Presentador;
 import mvp.PresentadorEntrenador;
 
-public abstract class Entrenador {
+public abstract class Entrenador implements PresentadorEntrenador{
 	
-	private PresentadorEntrenador presentadorEntrenador = new Presentador();
+	private Presentador presentadorEntrenador = new Presentador();
 	private String nombre;
 	private boolean luchando, cambiando, derrotado=false;
 
@@ -62,10 +65,6 @@ public abstract class Entrenador {
 		return listaPokemon;
 	}
 	
-	public PresentadorEntrenador getPresentadorEntrenador() {
-		return presentadorEntrenador;
-	}
-	
 	public void setPokemonCombatiente(Pokemon pokemon) {
 		pokemonCombatiente = pokemon;
 	}
@@ -74,32 +73,45 @@ public abstract class Entrenador {
 		return pokemonCombatiente;
 	}
 	
-	/*Metodo para asignar X pokemon a un entrenador*/
-	public void darPokemon(int numPokemon) {
-		FactoriaPokemon factoriaPokemon = new GenerarPokemon();
+	/*Metodo para asignar X pokemon a un entrenador*/	
+	public void darPokemon(int numPokemon){
 		Random rdm = new Random();
+		FactoriaPokemon factoriaPokemon = new GenerarPokemon();
+		Set<Pokemon> pokemon = new HashSet<>();
 		
-		boolean pokemonRepetido = false;
+		do {
+			pokemon.add(factoriaPokemon.generarPokemon(rdm.nextInt(factoriaPokemon.getNumeroEspecies())+1));
+		}while(pokemon.size() < numPokemon);
 		
-		//Asigno tantos pokemon como se han indicado por parametro al entrenador indicado por parametro.
-		for(int i=0; i<numPokemon; i++) {
-			do {
-				pokemonRepetido = false;
-				listaPokemon.add(
-						factoriaPokemon.generarPokemon(rdm.nextInt(factoriaPokemon.getNumeroEspecies())+1));
-				
-				//Se comprueba que el pokemon dado no coincide con ninguno de la lista
-				for (int j=0; j<i; j++) {
-					if(listaPokemon.get(i).getEspecie().getNombre()
-							.equals(listaPokemon.get(j).getEspecie().getNombre())) {
-						pokemonRepetido = true;
-					}
-				}
-				//Si el pokemon esta repetido se borra
-				if(pokemonRepetido) {
-					listaPokemon.remove(i);
-				}
-			}while(pokemonRepetido);
-		}
+		listaPokemon.addAll(pokemon);
+	}
+
+
+	public String pedirNombreUsuario() {
+		return presentadorEntrenador.pedirNombreUsuario();
+	}
+
+	public String pedirNombreMaquina() {
+		return presentadorEntrenador.pedirNombreMaquina();
+	}
+
+	public void cambiarAPokemonDebilitado() {
+		presentadorEntrenador.cambiarAPokemonDebilitado();
+	}
+
+	public void cambiarAMismoPokemon() {
+		presentadorEntrenador.cambiarAMismoPokemon();
+	}
+
+	public Pokemon ejecutarMenuCambiarPokemon(Entrenador usuario) {
+		return presentadorEntrenador.ejecutarMenuCambiarPokemon(usuario);
+	}
+
+	public Movimiento ejecutarMenuMovimientos(Pokemon pokemon) {
+		return presentadorEntrenador.ejecutarMenuMovimientos(pokemon);
+	}
+
+	public int ejecutarMenuCombate() {
+		return presentadorEntrenador.ejecutarMenuCombate();
 	}
 }

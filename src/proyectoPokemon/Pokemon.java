@@ -10,7 +10,6 @@ import estados.Paralizado;
 import estados.Sano;
 
 public class Pokemon{
-	
 	private int vida, velocidad;
 	private Estado estado;
 	private Especie especie;
@@ -72,6 +71,7 @@ public class Pokemon{
 	
 	public void moveToDormidoState() {
 		estado = dormido;
+		((Dormido) dormido).turnosDormido();
 	}
 	
 	public void moveToEnvenenadoState() {
@@ -85,5 +85,31 @@ public class Pokemon{
 	
 	public void moveToDebilitadoState() {
 		estado = debilitado;
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((especie == null) ? 0 : especie.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pokemon other = (Pokemon) obj;
+		if (especie == null) {
+			if (other.especie != null)
+				return false;
+		} else if (!especie.equals(other.especie))
+			return false;
+		return true;
 	}
 }

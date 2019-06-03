@@ -4,7 +4,7 @@ import baseDeDatos.Movimiento;
 import proyectoPokemon.Entrenador;
 import proyectoPokemon.Pokemon;
 
-public class Presentador implements PresentadorEntrenador, PresentadorCombate, PresentadorEstado, PresentadorCategoria{
+public class Presentador {
 
 	PresentadorVista presentadorVista = new Vista();
 	

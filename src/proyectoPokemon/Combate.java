@@ -2,20 +2,21 @@ package proyectoPokemon;
 
 import mvp.Presentador;
 import mvp.PresentadorCombate;
+import estados.Debilitado;
 import estados.Sano;
 
-public class Combate {
+public class Combate implements  PresentadorCombate {
+	Presentador presentadorCombate = new Presentador();
 	
 	public void empezarCombate(Entrenador usuario, Entrenador rival) {
-		PresentadorCombate presentadorCombate = new Presentador();
 		
 		boolean combate = true;
 		
 		/*Se les asigna los nombres a los usuarios*/
-		usuario.setNombre(usuario.getPresentadorEntrenador().pedirNombreUsuario());
-		rival.setNombre(rival.getPresentadorEntrenador().pedirNombreMaquina());
-		
-		presentadorCombate.presentacionCombate(usuario.getNombre(), rival.getNombre());
+//		usuario.setNombre(usuario.pedirNombreUsuario());
+//		rival.setNombre(rival.pedirNombreMaquina());
+//		
+//		presentacionCombate(usuario.getNombre(), rival.getNombre());
 		
 		/*Se les asigna los pokemon a los entrenadores*/
 		usuario.darPokemon(3);
@@ -24,14 +25,14 @@ public class Combate {
 		usuario.setPokemonCombatiente(usuario.getListaPokemon().get(0));
 		rival.setPokemonCombatiente(rival.getListaPokemon().get(0));
 		
-		/*Se muestran los pokemon del usuario*/
-		presentadorCombate.mostrarListaPokemon(usuario);
-
 		/*Comienza el combate*/
 		do {
-			presentadorCombate.mostrarInicioCombate(usuario, rival);
+			/*Se muestran los pokemon del usuario*/
+			mostrarListaPokemon(usuario);
+			
+			mostrarInicioCombate(usuario, rival);
 			do {
-				presentadorCombate.mostrarPokemonLuchando(usuario, rival);
+				mostrarPokemonLuchando(usuario, rival);
 				
 				if(!usuario.isDerrotado() && !rival.isDerrotado()) {
 					menuCombate(usuario);
@@ -52,9 +53,7 @@ public class Combate {
 		}while(combate);
 	}
 	
-	private static void menuCombate(Entrenador entrenador) {
-		PresentadorCombate presentadorCombate = new Presentador();
-
+	private  void menuCombate(Entrenador entrenador) {
 		switch(entrenador.elegirOpcionCombate()) {
 		case 1:
 			entrenador.elegirSiguienteMovimiento(entrenador.getPokemonCombatiente());
@@ -70,20 +69,18 @@ public class Combate {
 		
 		case 3:
 			entrenador.setDerrotado(true);
-			presentadorCombate.mostrarMensajeRendicion();
+			mostrarMensajeRendicion();
 			break;
 		}
 	}
 	
-	private static void efectuarTurno(Entrenador entrenador1, Entrenador entrenador2) {	
-		PresentadorCombate presentadorCombate = new Presentador();
-		
+	private  void efectuarTurno(Entrenador entrenador1, Entrenador entrenador2) {	
 		//Primero se realizan los cambios de los entrenadores que hayan decidido cambiar
 		if(entrenador1.isCambiando()){
-			presentadorCombate.mostrarMensajeCambio(entrenador1);
+			mostrarMensajeCambio(entrenador1);
 		}	
 		else if(entrenador2.isCambiando()) {
-			presentadorCombate.mostrarMensajeCambio(entrenador2);
+			mostrarMensajeCambio(entrenador2);
 		}
 		
 		//Despues de realizar los cambios se efectuan los ataques. Primero se comprueba la velocidad para ver 
@@ -94,9 +91,9 @@ public class Combate {
 		
 			//Si al atacar se debilita un pokemon se comprueba que el entrenador tiene más pokemon para 
 			//continuar con el combate. En caso contrario el entrenador pierde.
-			if(entrenador2.getPokemonCombatiente().getEstado().getNombre().equals("Debilitado")) {	
+			if(entrenador2.getPokemonCombatiente().getEstado() instanceof Debilitado) {	
 				if(!comprobarPokemonVivos(entrenador2)) {
-					presentadorCombate.mostrarMensajeFueraDeCombate(entrenador2);
+					mostrarMensajeFueraDeCombate(entrenador2);
 					entrenador2.setDerrotado(true);
 				}
 				
@@ -105,57 +102,60 @@ public class Combate {
 					entrenador2.cambiarPokemon(entrenador2.getPokemonCombatiente());
 					entrenador2.setCambiando(true);
 					entrenador2.setLuchando(false);
-					presentadorCombate.mostrarMensajeCambio(entrenador2);
+					mostrarMensajeCambio(entrenador2);
 				}
 			}
 		
 			else {
 				ataqueEntrenador(entrenador2, entrenador1);
-				if(entrenador1.getPokemonCombatiente().getEstado().getNombre().equals("Debilitado")) {
+				if(entrenador1.getPokemonCombatiente().getEstado() instanceof Debilitado) {
 					if(!comprobarPokemonVivos(entrenador1)) {
 						entrenador1.setDerrotado(true);
-						presentadorCombate.mostrarMensajeFueraDeCombate(entrenador1);
+						mostrarMensajeFueraDeCombate(entrenador1);
 					}
 					else {
 						entrenador1.cambiarPokemon(entrenador1.getPokemonCombatiente());
 						entrenador1.setCambiando(true);
 						entrenador1.setLuchando(false);
-						presentadorCombate.mostrarMensajeCambio(entrenador1);
+						mostrarMensajeCambio(entrenador1);
 					}
 				}
 			}
+			//Al acabar el turno se aplican los efectos de los estados de los pokemon
+			resolverEstados(entrenador1, entrenador2);
 		}
 		
 		else {
 			ataqueEntrenador(entrenador2, entrenador1);
-			if(entrenador1.getPokemonCombatiente().getEstado().getNombre().equals("Debilitado")) {
+			if(entrenador1.getPokemonCombatiente().getEstado() instanceof Debilitado) {
 				if(!comprobarPokemonVivos(entrenador1)) {
 					entrenador1.setDerrotado(true);
-					presentadorCombate.mostrarMensajeFueraDeCombate(entrenador1);
+					mostrarMensajeFueraDeCombate(entrenador1);
 				}
 				else {
 					entrenador1.cambiarPokemon(entrenador1.getPokemonCombatiente());
 					entrenador1.setCambiando(true);
 					entrenador1.setLuchando(false);
-					presentadorCombate.mostrarMensajeCambio(entrenador1);
+					mostrarMensajeCambio(entrenador1);
 				}
 			}
 			else {
 				ataqueEntrenador(entrenador1, entrenador2);
-				if(entrenador2.getPokemonCombatiente().getEstado().getNombre().equals("Debilitado")) {
+				if(entrenador2.getPokemonCombatiente().getEstado() instanceof Debilitado) {
 					if(!comprobarPokemonVivos(entrenador2)) {
 						entrenador2.setDerrotado(true);
-						presentadorCombate.mostrarMensajeFueraDeCombate(entrenador2);
+						mostrarMensajeFueraDeCombate(entrenador2);
 					}
 					else {
 						entrenador2.cambiarPokemon(entrenador2.getPokemonCombatiente());
 						entrenador2.setCambiando(true);
 						entrenador2.setLuchando(false);
-						presentadorCombate.mostrarMensajeCambio(entrenador2);
+						mostrarMensajeCambio(entrenador2);
 					}
 				}
 			}
 		}
+		resolverEstados(entrenador1, entrenador2);
 	}
 	
 	private static void ataqueEntrenador(Entrenador entrenador, Entrenador rival) {		
@@ -165,25 +165,28 @@ public class Combate {
 		}
 	}
 	
-	private static boolean compararVelocidad(Pokemon pokUsuario, Pokemon pokRival) {
+	private boolean compararVelocidad(Pokemon pokUsuario, Pokemon pokRival) {
 		return pokUsuario.getVelocidad()>pokRival.getVelocidad()?true:false;
 	}
 	
 	private static boolean comprobarPokemonVivos(Entrenador entrenador) {
 		boolean pokemonVivos = false;
 		for(Pokemon e : entrenador.getListaPokemon()) {
-			if(!e.getEstado().getNombre().equals("Debilitado")) {
+			if(!(e.getEstado() instanceof Debilitado)) {
 				pokemonVivos = true;
 			}
 		}
 		return pokemonVivos;
 	}
 	
-	private static boolean menuFinDelJuego(Entrenador entrenador1, Entrenador entrenador2) {
-		PresentadorCombate presentadorCombate = new Presentador();
-		
+	private void resolverEstados(Entrenador entrenador1, Entrenador entrenador2) {
+		entrenador1.getPokemonCombatiente().getEstado().resolverEstado(entrenador1.getPokemonCombatiente());
+		entrenador2.getPokemonCombatiente().getEstado().resolverEstado(entrenador2.getPokemonCombatiente());
+	}
+	
+	private boolean menuFinDelJuego(Entrenador entrenador1, Entrenador entrenador2) {
 		// Se pregunta al usuario si quiere volver a jugar
-		switch(presentadorCombate.mostrarMenuFinCombate()) {
+		switch(mostrarMenuFinCombate()) {
 		case 1: //Volver a jugar con los mismos pokemon
 			curarPokemon(entrenador1);
 			curarPokemon(entrenador2);
@@ -215,4 +218,40 @@ public class Combate {
 			e.setVelocidad(e.getEspecie().getVelocidad());
 		}
 	}
+
+	
+	/*METODOS DE LA INTERFAZ DEL PRESENTADOR*/
+
+	public void presentacionCombate(String nombreUsuario, String nombreRival) {
+		presentadorCombate.presentacionCombate(nombreUsuario, nombreRival);
+	}
+
+	public void mostrarListaPokemon(Entrenador entrenador) {
+		presentadorCombate.mostrarListaPokemon(entrenador);
+	}
+
+	public void mostrarInicioCombate(Entrenador usuario, Entrenador rival) {
+		presentadorCombate.mostrarInicioCombate(usuario, rival);
+	}
+
+	public void mostrarMensajeRendicion() {
+		presentadorCombate.mostrarMensajeRendicion();
+	}
+
+	public void mostrarMensajeCambio(Entrenador entrenador) {
+		presentadorCombate.mostrarMensajeCambio(entrenador);
+	}
+
+	public void mostrarPokemonLuchando(Entrenador entrenador1, Entrenador entrenador2) {
+		presentadorCombate.mostrarPokemonLuchando(entrenador1, entrenador2);
+	}
+
+	public void mostrarMensajeFueraDeCombate(Entrenador entrenador) {
+		presentadorCombate.mostrarMensajeFueraDeCombate(entrenador);
+	}
+
+	public int mostrarMenuFinCombate() {
+		return presentadorCombate.mostrarMenuFinCombate();
+	}
+	
 }

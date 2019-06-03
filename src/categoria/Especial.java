@@ -4,13 +4,12 @@ import java.util.Random;
 
 import baseDeDatos.Database;
 import baseDeDatos.Movimiento;
-import estados.Debilitado;
 import mvp.Presentador;
-import mvp.PresentadorCategoria;
+import mvp.PresentadorFisicoEspecial;
 import proyectoPokemon.Pokemon;
 
-public class Especial implements Categoria{
-	private PresentadorCategoria presentadorCategoria = new Presentador();
+public class Especial implements Categoria, PresentadorFisicoEspecial{
+	private Presentador presentadorEspecial = new Presentador();
 	private Random rdm = new Random(); 
 	
 	/*variables para guardar los valores que se aplicaran en la formula*/
@@ -30,26 +29,54 @@ public class Especial implements Categoria{
 			
 			daño = aplicarFormulaDaño();
 			pokemonObjetivo.setVida(pokemonObjetivo.getVida()-(int)daño);
-			presentadorCategoria.mostrarMensajeDañoAtaque(pokemonObjetivo, daño);
+			mostrarMensajeDañoAtaque(pokemonObjetivo, daño);
 			
 			//Se comprueba si el pokemon se ha debilitado y si es el caso se cambia su estado.
 			if(pokemonObjetivo.getVida() <= 0) {
-				pokemonObjetivo.setEstado(new Debilitado());
-				presentadorCategoria.mostrarMensajePokemonDebilitado(pokemonObjetivo);
+				pokemonObjetivo.moveToDebilitadoState();
+				mostrarMensajePokemonDebilitado(pokemonObjetivo);
 			}
 		}
 		else { //si falla el ataque
-			presentadorCategoria.mostrarMensajeFalloAtaque();
+			mostrarMensajeFalloAtaque();
 		}
 		
 	}
 	
 	private double calcularEfectividad(Movimiento movimiento, Pokemon pokemonObjetivo) {
-		return Database.INSTANCE.getEfectividades().get(movimiento.getTipo().getId())
+		Double tipo, subtipo, total;
+		
+		tipo = Database.INSTANCE.getEfectividades().get(movimiento.getTipo().getId())
 						.get(pokemonObjetivo.getEspecie().getTipo().getId());
+		
+		if(pokemonObjetivo.getEspecie().getSubtipo() == null) {
+			subtipo = 1.0;
+		}
+		else {
+			subtipo = Database.INSTANCE.getEfectividades().get(movimiento.getTipo().getId())
+					.get(pokemonObjetivo.getEspecie().getSubtipo().getId());
+		}
+		
+		
+		total = tipo*subtipo;
+	
+		return total;
 	}
 	
 	private double aplicarFormulaDaño() {		
 		return 0.01*b*e*v*(((0.2*n+1)*a*p)/(25*d)+2);
+	}
+	
+	/*METODOS DEL PRESENTADOR*/
+	public void mostrarMensajeFalloAtaque() {
+		presentadorEspecial.mostrarMensajeFalloAtaque();
+	}
+
+	public void mostrarMensajePokemonDebilitado(Pokemon pokemon) {
+		presentadorEspecial.mostrarMensajePokemonDebilitado(pokemon);
+	}
+
+	public void mostrarMensajeDañoAtaque(Pokemon pokemon, double daño) {
+		presentadorEspecial.mostrarMensajeDañoAtaque(pokemon, daño);
 	}
 }

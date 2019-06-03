@@ -1,27 +1,45 @@
 package categoria;
 
 import java.util.Random;
-import estados.Envenenado;
+
+import estados.Sano;
 import mvp.Presentador;
-import mvp.PresentadorCategoria;
+import mvp.PresentadorEstadoEnv;
 import proyectoPokemon.Pokemon;
 
-public class EstadoEnv implements Categoria{
-	private PresentadorCategoria presentadorCategoria = new Presentador();
+public class EstadoEnv implements Categoria, PresentadorEstadoEnv{
+	private Presentador presentadorEstadoEnv = new Presentador();
 	private Random rdm = new Random(); 
 	
 	public void calcularDaño(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
 		if(rdm.nextInt(100) <= pokemonAtacante.getProximoMovimiento().getPrecision()) {
-			if(!pokemonObjetivo.getEstado().getNombre().equals("Sano")) {
-				presentadorCategoria.mostrarMensajeYaTieneEstado(pokemonObjetivo);
+			if(!(pokemonObjetivo.getEstado() instanceof Sano)) {
+				mostrarMensajeYaTieneEstado(pokemonObjetivo);
 			}
 			else {
-				pokemonObjetivo.setEstado(new Envenenado());
-				presentadorCategoria.mostrarMensajeEnvenenado(pokemonObjetivo);
+				pokemonObjetivo.moveToEnvenenadoState();
+				mostrarMensajeEnvenenado(pokemonObjetivo);
 			}
 		}
 		else {
-			presentadorCategoria.mostrarMensajeFalloAtaque();
+			mostrarMensajeFalloAtaque();
 		}
+	}
+
+	/*METODOS DEL PRESENTADOR*/
+	public void mostrarMensajeFalloAtaque() {
+		presentadorEstadoEnv.mostrarMensajeFalloAtaque();
+	}
+
+	public void mostrarMensajeYaTieneEstado(Pokemon pokemon) {
+		presentadorEstadoEnv.mostrarMensajeYaTieneEstado(pokemon);
+	}
+
+	public void mostrarMensajePokemonDebilitado(Pokemon pokemon) {
+		presentadorEstadoEnv.mostrarMensajePokemonDebilitado(pokemon);
+	}
+
+	public void mostrarMensajeEnvenenado(Pokemon pokemon) {
+		presentadorEstadoEnv.mostrarMensajeEnvenenado(pokemon);
 	}
 }

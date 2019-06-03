@@ -1,11 +1,11 @@
 package estados;
 
 import mvp.Presentador;
-import mvp.PresentadorEstado;
+import mvp.PresentadorSano;
 import proyectoPokemon.Pokemon;
 
-public class Sano implements Estado{
-	private PresentadorEstado presentadorEstado = new Presentador();
+public class Sano implements Estado, PresentadorSano{
+	private Presentador presentadorSano = new Presentador();
 	private String nombre = "Sano";
 	
 	public String getNombre() {
@@ -13,8 +13,17 @@ public class Sano implements Estado{
 	}
 	
 	public void atacar(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
-		presentadorEstado.mostrarMensajeAtaque(pokemonAtacante);
+		mostrarMensajeAtaque(pokemonAtacante);
 		pokemonAtacante.getProximoMovimiento().getCategoria().calcularDaño(pokemonAtacante, pokemonObjetivo);
+	}
+
+
+	public void mostrarMensajeAtaque(Pokemon pokemon) {
+		presentadorSano.mostrarMensajeAtaque(pokemon);
+	}
+	
+	public void resolverEstado(Pokemon pokemon) {
+		
 	}
 
 }

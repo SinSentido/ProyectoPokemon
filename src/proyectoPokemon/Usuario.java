@@ -1,24 +1,19 @@
 package proyectoPokemon;
 
-import mvp.Presentador;
-import mvp.PresentadorEntrenador;
-
 public class Usuario extends Entrenador{
-	
-	private PresentadorEntrenador presentadorEntrenador = new Presentador();
 	
 	public void cambiarPokemon(Pokemon pokemon) {
 		boolean eleccionValida = false;
 		Pokemon nuevoPokemon;
 		do {
-			nuevoPokemon = presentadorEntrenador.ejecutarMenuCambiarPokemon(this);
+			nuevoPokemon = ejecutarMenuCambiarPokemon(this);
 			//Si intenta cambiar el pokemon por el mismo pokemon
 			if(nuevoPokemon.getEspecie().getNombre().equals(pokemon.getEspecie().getNombre())){ 
-				presentadorEntrenador.cambiarAMismoPokemon();
+				cambiarAMismoPokemon();
 			}
 			//Si intenta cambiar por un pokemon debilitado
 			else if(nuevoPokemon.getEstado().getNombre().equals("Debilitado")) {
-				presentadorEntrenador.cambiarAPokemonDebilitado();
+				cambiarAPokemonDebilitado();
 			}
 			else {
 				eleccionValida = true;
@@ -28,11 +23,11 @@ public class Usuario extends Entrenador{
 	}
 
 	public void elegirSiguienteMovimiento(Pokemon pokemon) {
-		pokemon.setProximoMovimiento(presentadorEntrenador.ejecutarMenuMovimientos(pokemon));
+		pokemon.setProximoMovimiento(ejecutarMenuMovimientos(pokemon));
 	}
 	
 	public int elegirOpcionCombate() {
-		return presentadorEntrenador.ejecutarMenuCombate();
+		return ejecutarMenuCombate();
 	}
 	
 	public void setPokemonCombatiente(Pokemon pokemon) {
