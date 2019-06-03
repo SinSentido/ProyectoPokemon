@@ -27,7 +27,6 @@ public class Usuario extends Entrenador{
 		}while(!eleccionValida);
 	}
 
-	@Override
 	public void elegirSiguienteMovimiento(Pokemon pokemon) {
 		pokemon.setProximoMovimiento(presentadorEntrenador.ejecutarMenuMovimientos(pokemon));
 	}

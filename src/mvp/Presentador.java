@@ -37,7 +37,7 @@ public class Presentador implements PresentadorEntrenador, PresentadorCombate, P
 	}
 	
 	public void cambiarAMismoPokemon() {
-		presentadorVista.cambiarAPokemonDebilitado();
+		presentadorVista.cambiarAMismoPokemon();
 	}
 	
 	/*************************************************/

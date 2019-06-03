@@ -12,14 +12,14 @@ public class Combate {
 		boolean combate = true;
 		
 		/*Se les asigna los nombres a los usuarios*/
-//		usuario.setNombre(usuario.getPresentadorEntrenador().pedirNombreUsuario());
-//		rival.setNombre(rival.getPresentadorEntrenador().pedirNombreMaquina());
-//		
-//		presentadorCombate.presentacionCombate(usuario.getNombre(), rival.getNombre());
+		usuario.setNombre(usuario.getPresentadorEntrenador().pedirNombreUsuario());
+		rival.setNombre(rival.getPresentadorEntrenador().pedirNombreMaquina());
+		
+		presentadorCombate.presentacionCombate(usuario.getNombre(), rival.getNombre());
 		
 		/*Se les asigna los pokemon a los entrenadores*/
-		usuario.darPokemonAEntrenador(3);
-		rival.darPokemonAEntrenador(3);		
+		usuario.darPokemon(3);
+		rival.darPokemon(3);		
 		/*Se asignan los primeros pokemon de cada entrenador como los pokemon que van a luchar en primer lugar*/
 		usuario.setPokemonCombatiente(usuario.getListaPokemon().get(0));
 		rival.setPokemonCombatiente(rival.getListaPokemon().get(0));
@@ -46,28 +46,8 @@ public class Combate {
 			usuario.setDerrotado(false);
 			rival.setDerrotado(false);
 			
-			// Se pregunta al usuario si quiere volver a jugar
-			switch(presentadorCombate.mostrarMenuFinCombate()) {
-			case 1: //Volver a jugar con los mismos pokemon
-				reiniciarEstadisticasPokemon(usuario);
-				reiniciarEstadisticasPokemon(rival);
-				
-				usuario.setPokemonCombatiente(usuario.getListaPokemon().get(0));
-				rival.setPokemonCombatiente(rival.getListaPokemon().get(0));
-				break;
-			case 2: //Volver a jugar con pokemon diferentes
-				usuario.getListaPokemon().removeAll(usuario.getListaPokemon());
-				rival.getListaPokemon().removeAll(rival.getListaPokemon());
-				
-				usuario.darPokemonAEntrenador(3);
-				rival.darPokemonAEntrenador(3);
-				
-				usuario.setPokemonCombatiente(usuario.getListaPokemon().get(0));
-				rival.setPokemonCombatiente(rival.getListaPokemon().get(0));
-				break;
-			case 3: //Salir del juego
-				combate = false;
-			}
+			//Se ejecuta el menu del final del juego
+			combate = menuFinDelJuego(usuario, rival);
 			
 		}while(combate);
 	}
@@ -99,10 +79,12 @@ public class Combate {
 		PresentadorCombate presentadorCombate = new Presentador();
 		
 		//Primero se realizan los cambios de los entrenadores que hayan decidido cambiar
-		if(entrenador1.isCambiando() || entrenador2.isCambiando()){
-			cambioPokemon(entrenador1);
-			cambioPokemon(entrenador2);
+		if(entrenador1.isCambiando()){
+			presentadorCombate.mostrarMensajeCambio(entrenador1);
 		}	
+		else if(entrenador2.isCambiando()) {
+			presentadorCombate.mostrarMensajeCambio(entrenador2);
+		}
 		
 		//Despues de realizar los cambios se efectuan los ataques. Primero se comprueba la velocidad para ver 
 		//quien ataca en primer lugar
@@ -123,7 +105,7 @@ public class Combate {
 					entrenador2.cambiarPokemon(entrenador2.getPokemonCombatiente());
 					entrenador2.setCambiando(true);
 					entrenador2.setLuchando(false);
-					cambioPokemon(entrenador2);
+					presentadorCombate.mostrarMensajeCambio(entrenador2);
 				}
 			}
 		
@@ -138,7 +120,7 @@ public class Combate {
 						entrenador1.cambiarPokemon(entrenador1.getPokemonCombatiente());
 						entrenador1.setCambiando(true);
 						entrenador1.setLuchando(false);
-						cambioPokemon(entrenador1);
+						presentadorCombate.mostrarMensajeCambio(entrenador1);
 					}
 				}
 			}
@@ -155,7 +137,7 @@ public class Combate {
 					entrenador1.cambiarPokemon(entrenador1.getPokemonCombatiente());
 					entrenador1.setCambiando(true);
 					entrenador1.setLuchando(false);
-					cambioPokemon(entrenador1);
+					presentadorCombate.mostrarMensajeCambio(entrenador1);
 				}
 			}
 			else {
@@ -169,17 +151,10 @@ public class Combate {
 						entrenador2.cambiarPokemon(entrenador2.getPokemonCombatiente());
 						entrenador2.setCambiando(true);
 						entrenador2.setLuchando(false);
-						cambioPokemon(entrenador2);
+						presentadorCombate.mostrarMensajeCambio(entrenador2);
 					}
 				}
 			}
-		}
-	}
-	
-	private static void cambioPokemon(Entrenador entrenador) {
-		PresentadorCombate presentadorCombate = new Presentador();
-		if(entrenador.isCambiando()) {
-			presentadorCombate.mostrarMensajeCambio(entrenador);
 		}
 	}
 	
@@ -204,7 +179,36 @@ public class Combate {
 		return pokemonVivos;
 	}
 	
-	private static void reiniciarEstadisticasPokemon(Entrenador entrenador) {
+	private static boolean menuFinDelJuego(Entrenador entrenador1, Entrenador entrenador2) {
+		PresentadorCombate presentadorCombate = new Presentador();
+		
+		// Se pregunta al usuario si quiere volver a jugar
+		switch(presentadorCombate.mostrarMenuFinCombate()) {
+		case 1: //Volver a jugar con los mismos pokemon
+			curarPokemon(entrenador1);
+			curarPokemon(entrenador2);
+			
+			entrenador1.setPokemonCombatiente(entrenador1.getListaPokemon().get(0));
+			entrenador2.setPokemonCombatiente(entrenador2.getListaPokemon().get(0));
+			break;
+		case 2: //Volver a jugar con pokemon diferentes
+			entrenador1.getListaPokemon().removeAll(entrenador1.getListaPokemon());
+			entrenador2.getListaPokemon().removeAll(entrenador2.getListaPokemon());
+			
+			entrenador1.darPokemon(3);
+			entrenador2.darPokemon(3);
+			
+			entrenador1.setPokemonCombatiente(entrenador1.getListaPokemon().get(0));
+			entrenador2.setPokemonCombatiente(entrenador2.getListaPokemon().get(0));
+			break;
+		case 3: //Salir del juego
+			return false;
+		}
+		return true;
+	}
+	
+	//Metodo para reiniciar las estadisticas de todos los pokemon de un entrenador.
+	private static void curarPokemon(Entrenador entrenador) {
 		for(Pokemon e : entrenador.getListaPokemon()) {
 			e.setEstado(new Sano());
 			e.setVida(e.getEspecie().getVida());

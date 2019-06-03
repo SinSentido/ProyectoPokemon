@@ -15,7 +15,7 @@ public abstract class Entrenador {
 	private String nombre;
 	private boolean luchando, cambiando, derrotado=false;
 
-	protected List<Pokemon> listaPokemon = new ArrayList<>();
+	private List<Pokemon> listaPokemon = new ArrayList<>();
 	protected Pokemon pokemonCombatiente;
 	
 	public abstract void cambiarPokemon(Pokemon pokemon);
@@ -75,7 +75,7 @@ public abstract class Entrenador {
 	}
 	
 	/*Metodo para asignar X pokemon a un entrenador*/
-	public void darPokemonAEntrenador(int numPokemon) {
+	public void darPokemon(int numPokemon) {
 		FactoriaPokemon factoriaPokemon = new GenerarPokemon();
 		Random rdm = new Random();
 		
@@ -102,5 +102,4 @@ public abstract class Entrenador {
 			}while(pokemonRepetido);
 		}
 	}
-
 }

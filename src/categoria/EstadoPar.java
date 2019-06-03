@@ -1,7 +1,6 @@
 package categoria;
 
 import java.util.Random;
-import estados.Paralizado;
 import mvp.Presentador;
 import mvp.PresentadorCategoria;
 import proyectoPokemon.Pokemon;
@@ -16,7 +15,7 @@ public class EstadoPar implements Categoria{
 				presentadorCategoria.mostrarMensajeYaTieneEstado(pokemonObjetivo);
 			}
 			else {
-				pokemonObjetivo.setEstado(new Paralizado());
+				pokemonObjetivo.moveToParalizadoState();
 				presentadorCategoria.mostrarMensajeParalizado(pokemonObjetivo);	
 			}
 		}

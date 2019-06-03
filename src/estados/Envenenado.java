@@ -8,15 +8,13 @@ public class Envenenado implements Estado{
 	private PresentadorEstado presentadorEstado = new Presentador();
 	private String nombre = "Envenenado";
 	private int maxTurnosEnv = 5;
-	private int contador = 1;
+	private int contador = 0;
 	
 	public String getNombre() {
 		return nombre;
 	}
 
 	public void atacar(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
-		contador++;
-		
 		//El pokemon ataca
 		presentadorEstado.mostrarMensajeAtaque(pokemonAtacante);
 		pokemonAtacante.getProximoMovimiento().getCategoria().calcularDaño(pokemonAtacante, pokemonObjetivo);
@@ -35,6 +33,6 @@ public class Envenenado implements Estado{
 				pokemonAtacante.setEstado(new Debilitado());
 			}
 		}
-		
+		contador++;
 	}
 }

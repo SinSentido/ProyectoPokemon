@@ -14,7 +14,7 @@ public class Paralizado implements Estado{
 	public String getNombre() {
 		return nombre;
 	}
-
+	
 	public void atacar(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
 		
 		if(rdm.nextInt(2) == 0) { //Si la paralisis hace efecto
@@ -26,5 +26,4 @@ public class Paralizado implements Estado{
 		}
 		
 	}
-
 }
