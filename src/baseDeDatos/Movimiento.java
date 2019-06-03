@@ -1,15 +1,15 @@
 package baseDeDatos;
 
-import proyectoPokemon.Categoria;
+import categoria.Categoria;
 
 public class Movimiento {
 	
 	private int id, potencia, precision;
 	private String nombre;
-	Categoria categoria;
-	Tipo tipo;
+	private Categoria categoria;
+	private Tipo tipo;
 	
-	public Movimiento(int id, String nombre, int potencia, int precision, Categoria categoria, Tipo tipo){
+	public Movimiento( int id, String nombre, int potencia, int precision, Categoria categoria, Tipo tipo){
 		this.id = id;
 		this.nombre = nombre;
 		this.potencia = potencia;
@@ -17,7 +17,7 @@ public class Movimiento {
 		this.categoria = categoria;
 		this.tipo = tipo;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -41,5 +41,4 @@ public class Movimiento {
 	public Tipo getTipo() {
 		return tipo;
 	}
-
 }

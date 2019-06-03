@@ -11,6 +11,10 @@ import proyectoPokemon.Pokemon;
 
 public class Vista implements PresentadorVista{
 	
+	/**************************************/
+	/***********VISTA ENTRENADOR***********/
+	
+	/*Metodo para pedir el nombre del usuario al principio*/
 	public String pedirNombreUsuario() {
 		String nombre;
 		boolean aceptar = false;
@@ -28,6 +32,7 @@ public class Vista implements PresentadorVista{
 		return nombre;
 	}
 	
+	//Metodo para pedir el nombre del entrenador máquina
 	public String pedirNombreMaquina() {
 		String nombre;
 		
@@ -39,6 +44,122 @@ public class Vista implements PresentadorVista{
 		
 		return nombre;
 	}
+	
+	/*Metodo para que el entrenador usuario elija que hacer en cada turno*/
+	public int ejecutarMenuCombate() {
+		System.out.printf("%n¿Que quieres hacer?"
+				+ "%n1. Luchar"
+				+ "%n2. Cambiar pokemon"
+				+ "%n3. Rendirse%n");
+		
+		return readNumberInRange(1, 3, Limit.MAX_MIN_INCLUDED);
+	}
+	
+	/*Metodo para que el entrenador usuario elija que movimiento quiere hacer*/
+	public Movimiento ejecutarMenuMovimientos(Pokemon pokemon) {
+		int opcion, contador = 1;
+		
+		System.out.printf("%nAtaques de %s:%n", mostrarNombrePokemon(pokemon));
+		for(Movimiento e : pokemon.getEspecie().getMovimientos()) {
+			System.out.printf("%d. %s%n",contador, e.getNombre());
+			contador++;
+		}
+		
+		opcion = readNumberInRange(1, 4, Limit.MAX_MIN_INCLUDED);
+		
+		return pokemon.getEspecie().getMovimientos().get(opcion-1);
+	};
+	
+	/*Metodo para que el entrenador usuario elija un pokemon para cambiar*/
+	public Pokemon ejecutarMenuCambiarPokemon(Entrenador usuario) {
+		int opcion;
+		
+		System.out.printf("%n¿Qué pokemon quieres sacar?"); 
+		mostrarListaPokemon(usuario);
+
+		opcion = readNumberInRange(1, usuario.getListaPokemon().size(), Limit.MAX_MIN_INCLUDED);
+		
+		return usuario.getListaPokemon().get(opcion-1);
+	}
+	
+	/*Metodo que informa al usuario que está intentando sacar un pokemon debilitado*/
+	public void cambiarAPokemonDebilitado() {
+		efectoEscrito("No puedes elegir a un pokemon debilitado\n", 30);
+	}
+	
+	/*Metodo que informa al usuario que está intentando sacar al mismo pokemon que está en combate*/
+	public void cambiarAMismoPokemon() {
+		efectoEscrito("No puedes elegir al mismo pokemon\n", 30);
+	}
+	
+	
+	/**********************************/
+	/***********VISTA ESTADO***********/
+	
+	
+	/*Dormido*/
+	public void mostrarMensajeAtacarDormido(Pokemon pokemon) {
+		efectoEscrito(mostrarNombrePokemon(pokemon) + " no puede atacar porque está dormido\n", 30);
+	}
+	
+	public void mostrarMensajeDespertar(Pokemon pokemon) {
+		efectoEscrito(mostrarNombrePokemon(pokemon) + " se ha despertado y ya puede atacar\n", 30);
+	}
+	
+	/*Envenenado*/
+	public void mostrarMensajeCurarVeneno(Pokemon pokemon) {
+		efectoEscrito("\n" + mostrarNombrePokemon(pokemon) + " ya no está envenenado.\n", 30);
+	}
+	
+	public void mostrarMensajeDañoVeneno(Pokemon pokemon) {
+		efectoEscrito("\n" + mostrarNombrePokemon(pokemon) + " sufre daño por el veneno.\n", 30);
+	}
+	
+	/*Paralizado*/
+	public void mostrarMensajeAtacarParalizado(Pokemon pokemon) {
+		efectoEscrito("\n" + mostrarNombrePokemon(pokemon) + " está paralizado y no puede atacar.\n", 30);
+	}
+	
+	
+	/*************************************/
+	/***********VISTA CATEGORIA***********/
+	
+	/*Mensaje que se muestra cuando falla un ataque*/
+	public void mostrarMensajeFalloAtaque() {
+		efectoEscrito("El ataque ha fallado", 30);
+	}
+	
+	/*Mensaje que se muestra cuando un ataque duerme a un pokemon*/
+	public void mostrarMensajeDormido(Pokemon pokemon) {
+		efectoEscrito(mostrarNombrePokemon(pokemon) + " se ha dormido\n", 30);
+	}
+	
+	/*Mensaje que se muestra cuando un ataque envenena a un pokemon*/
+	public void mostrarMensajeEnvenenado(Pokemon pokemon) {
+		efectoEscrito(mostrarNombrePokemon(pokemon) + " está envenenado\n", 30);
+	}
+	
+	/*Mensaje que se muestra cuando un ataque paraliza a un pokemon*/
+	public void mostrarMensajeParalizado(Pokemon pokemon) {
+		efectoEscrito(mostrarNombrePokemon(pokemon) + " está paralizado\n", 30);
+	}
+	
+	public void mostrarMensajeDañoAtaque(Pokemon pokemon, double daño) {
+		efectoEscrito(mostrarNombrePokemon(pokemon) + " recibe " + (int)daño + " puntos de daño\n", 30);
+	}
+	
+	public void mostrarMensajePokemonDebilitado(Pokemon pokemon) {
+		efectoEscrito("\n" + mostrarNombrePokemon(pokemon) + " se ha debilitado\n", 30);
+		pausaDramatica();
+	}
+	
+	public void mostrarMensajeYaTieneEstado(Pokemon pokemon) {
+		efectoEscrito("\n" + mostrarNombrePokemon(pokemon) + " ya esta " 
+				+ pokemon.getEstado().getNombre() + "\n", 30);	
+	}
+	
+	/***********************************/
+	/***********VISTA COMBATE***********/
 	
 	public void presentacionCombate(String nombreUsuario, String nombreRival) {
 		boolean reglas = false;
@@ -78,11 +199,14 @@ public class Vista implements PresentadorVista{
 	}
 	
 	public void mostrarInicioCombate(Entrenador usuario, Entrenador rival) {
-		efectoEscrito("\nComienza el combate entre " + usuario.getNombre() + " y " + rival.getNombre() + "\n", 30);
+		efectoEscrito("\n*****Comienza el combate entre " + usuario.getNombre() 
+				+ " y " + rival.getNombre() + "*****\n", 30);
 		pausaDramatica();
 		efectoEscrito("\nHas sacado a " + mostrarNombrePokemon(usuario.getPokemonCombatiente()) + "\n", 30);
+		pausaDramatica();
 		efectoEscrito("\n" + rival.getNombre() + " ha sacado a " 
 				+ mostrarNombrePokemon(rival.getPokemonCombatiente()) + "\n", 30);
+		pausaDramatica();
 	}
 	
 	public void mostrarListaPokemon(Entrenador entrenador) {
@@ -94,75 +218,70 @@ public class Vista implements PresentadorVista{
 			contador++;
 		}
 	}
+	
+	public void mostrarPokemonLuchando(Entrenador entrenador1, Entrenador entrenador2) {
+		System.out.printf("%nPokemon de %s: %s%nPokemon de %s: %s%n"
+				,entrenador1.getNombre()
+				,mostrarDatosPokemon(entrenador1.getPokemonCombatiente())
+				,entrenador2.getNombre()
+				,mostrarDatosPokemon(entrenador2.getPokemonCombatiente()));
+	}
 
-	public String mostrarNombrePokemon(Pokemon pokemon) {
-		return String.format("[%s]", pokemon.getEspecie().getNombre());
-	}
-	
-	public String mostrarVidaPokemon(Pokemon pokemon) {
-		return String.format("[%d / %d]", pokemon.getVida(), pokemon.getEspecie().getVida());
-	}
-	
-	public String mostrarEstadoPokemon(Pokemon pokemon) {
-		return String.format("[%s]", pokemon.getEstado());
-	}
-	
-	public String mostrarDatosPokemon(Pokemon pokemon) {
-		return String.format("%s %s %s", mostrarNombrePokemon(pokemon)
-				,mostrarEstadoPokemon(pokemon)
-				,mostrarVidaPokemon(pokemon));
-	}
-	
 	public void mostrarMensajeRendirse() {
-		efectoEscrito("Te has rendido y has perdido el combate", 30);
+		efectoEscrito("\nTe has rendido y has perdido el combate\n", 30);
 	}
 	
 	public void mostrarMensajeCambio(Entrenador entrenador) {
 		efectoEscrito(entrenador.getNombre() + " guarda a su pokemon y saca a " 
-				+ mostrarNombrePokemon(entrenador.getPokemonCombatiente()), 30);
+				+ mostrarNombrePokemon(entrenador.getPokemonCombatiente()) + "\n", 30);
 	}
 	
+	public void mostrarMensajeAtaque(Pokemon pokemon) {
+		efectoEscrito("\n" + mostrarNombrePokemon(pokemon) + " ha utilizado " 
+				+ pokemon.getProximoMovimiento().getNombre() + "\n", 30);
+	}
 	
-	/*MENUS DEL JUEGO*/
-	public int ejecutarMenuCombate(Entrenador usuario, Entrenador rival) {
-		System.out.printf("%nTu pokemon: %s%n %nPokemon rival: %s%n"
-				,mostrarDatosPokemon(usuario.getPokemonCombatiente())
-				,mostrarDatosPokemon(rival.getPokemonCombatiente()));
-		
-		System.out.printf("%n¿Que quieres hacer?"
-				+ "%n1. Luchar"
-				+ "%n2. Cambiar pokemon"
-				+ "%n3. Rendirse%n");
+	public void mostrarMensajeFueraDeCombate(Entrenador entrenador) {
+		efectoEscrito("\nA " +entrenador.getNombre() + " no le quedan más pokemon. Está fuera de combate.\n", 30);
+	}
+	
+	public int mostrarMenuFinCombate() {
+		pausaDramatica();
+		System.out.printf("%n-----FIN DEL COMBATE-----%n"
+				+ "1. Volver a jugar con los mismo pokemon%n"
+				+ "2. Volver a jugar con otros pokemon%n"
+				+ "3. Salir del juego%n");
 		
 		return readNumberInRange(1, 3, Limit.MAX_MIN_INCLUDED);
 	}
 	
-	public Movimiento ejecutarMenuMovimientos(Pokemon pokemon) {
-		int opcion;
-		
-		System.out.printf("%nAtaques de %s:", mostrarNombrePokemon(pokemon));
-		for(Movimiento e : pokemon.getEspecie().getMovimientos()) {
-			System.out.printf("%n%s", e.getNombre());
-		}
-		
-		opcion = readNumberInRange(1, 4, Limit.MAX_MIN_INCLUDED);
-		
-		return pokemon.getEspecie().getMovimientos().get(opcion);
-	};
 	
-	public Pokemon ejecutarMenuCambiarPokemon(Entrenador usuario) {
-		int opcion;
-		
-		System.out.printf("%n¿Qué pokemon quieres sacar?"); 
-		mostrarListaPokemon(usuario);
-
-		opcion = readNumberInRange(1, usuario.getListaPokemon().size(), Limit.MAX_MIN_INCLUDED);
-		
-		return usuario.getListaPokemon().get(opcion-1);
+	/*********************************************************/
+	/***********OTRAS FUNCIONALIDADES PARA LA VISTA***********/
+	
+	/*Metodos para mostrar los datos de los pokemon*/
+	//Para mostrar el nombre de un pokemon
+	public String mostrarNombrePokemon(Pokemon pokemon) {
+		return String.format("[%s]", pokemon.getEspecie().getNombre());
 	}
 	
+	//Para mostrar la vida de un pokemon
+	public String mostrarVidaPokemon(Pokemon pokemon) {
+		return String.format("[%d / %d]", pokemon.getVida(), pokemon.getEspecie().getVida());
+	}
 	
-	/*OTROS METODOS*/
+	//Para mostrar el estado de un pokemon
+	public String mostrarEstadoPokemon(Pokemon pokemon) {
+		return String.format("[%s]", pokemon.getEstado().getNombre());
+	}
+	
+	//Para mostrar todos los datos del pokemon
+	public String mostrarDatosPokemon(Pokemon pokemon) {
+		return String.format("%s%s%s", mostrarNombrePokemon(pokemon)
+				,mostrarEstadoPokemon(pokemon)
+				,mostrarVidaPokemon(pokemon));
+	}
+	
 	/*Metodo para escribir el texto letra por letra*/
 	private void efectoEscrito(String texto, long milisegundos) {
 		for(int i=0; i<texto.length(); i++) {

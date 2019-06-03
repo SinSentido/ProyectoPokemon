@@ -1,9 +1,6 @@
 package factoriaPokemon;
 
-import java.util.Map;
-
 import baseDeDatos.Database;
-import baseDeDatos.Especie;
 import proyectoPokemon.Pokemon;
 
 public abstract class FactoriaPokemon {

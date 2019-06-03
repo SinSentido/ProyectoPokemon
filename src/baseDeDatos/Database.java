@@ -8,12 +8,12 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import proyectoPokemon.Categoria;
-import proyectoPokemon.Especial;
-import proyectoPokemon.EstadoDor;
-import proyectoPokemon.EstadoEnv;
-import proyectoPokemon.EstadoPar;
-import proyectoPokemon.Fisico;
+import categoria.Categoria;
+import categoria.Especial;
+import categoria.EstadoDor;
+import categoria.EstadoEnv;
+import categoria.EstadoPar;
+import categoria.Fisico;
 
 public enum Database {
 	
@@ -21,11 +21,11 @@ public enum Database {
 	
 	private Map<Integer, Movimiento> movimientos = new HashMap<>();
 	private Map<Integer, Especie> especies = new HashMap<>();
-	private Map<Tipo, Map<Tipo, Double>> efectividades = new HashMap<>();
+	private Map<Integer, Map<Integer, Double>> efectividades = new HashMap<>();
 	private Map<Integer, Tipo> tipos = new HashMap<>();
 	
 	Database(){
-//		cargarEfectividades();
+		cargarEfectividades();
 		cargarTipos();
 		cargarMovimientos();
 		cargarEspecies();
@@ -40,7 +40,7 @@ public enum Database {
 		return especies;
 	}
 
-	public Map<Tipo, Map<Tipo, Double>> getEfectividades() {
+	public Map<Integer, Map<Integer, Double>> getEfectividades() {
 		return efectividades;
 	}
 
@@ -49,16 +49,15 @@ public enum Database {
 	}
 	
 	/*Metodos para cargar los datos en sus mapas correspondientes*/
+	
 	public void cargarEfectividades() {//carga los datos de las efectividades en el mapa efectividades
 		Stream<String> linea;
 		try(BufferedReader objReader=new BufferedReader(new FileReader("FicheroEfectividades.csv"))){
 			linea=objReader.lines();
 			efectividades = linea.map(s -> s.split(";"))
-					.collect(Collectors.groupingBy(array -> tipos.get(Integer.parseInt(array[0])), 
-							Collectors.toMap(clave -> tipos.get(Integer.parseInt(clave[1]))
+					.collect(Collectors.groupingBy(array -> Integer.parseInt(array[0]) 
+							,Collectors.toMap(clave -> Integer.parseInt(clave[1])
 									,valor -> Double.parseDouble(valor[2]))));
-
-			linea.forEach(string -> System.out.println(string));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

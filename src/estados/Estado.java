@@ -4,6 +4,7 @@ import proyectoPokemon.Pokemon;
 
 public interface Estado {
 	
-	public void atacar(Pokemon pokemonObjetivo);
-
+	public void atacar(Pokemon pokemonAtacante, Pokemon pokemonObjetivo);
+	
+	public String getNombre();
 }

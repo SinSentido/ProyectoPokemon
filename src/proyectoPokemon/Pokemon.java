@@ -1,8 +1,7 @@
 package proyectoPokemon;
 
-import java.util.List;
-
 import baseDeDatos.Especie;
+import baseDeDatos.Movimiento;
 import estados.Estado;
 import estados.Sano;
 
@@ -11,6 +10,7 @@ public class Pokemon{
 	private int vida, velocidad;
 	private Estado estado;
 	private Especie especie;
+	private Movimiento proximoMovimiento;
 
 	public Pokemon(Especie especie) {
 		this.vida = especie.getVida();
@@ -45,5 +45,13 @@ public class Pokemon{
 
 	public Especie getEspecie() {
 		return especie;
+	}
+	
+	public void setProximoMovimiento(Movimiento proximoAtaque) {
+		this.proximoMovimiento = proximoAtaque;
+	}
+	
+	public Movimiento getProximoMovimiento() {
+		return proximoMovimiento;
 	}
 }
