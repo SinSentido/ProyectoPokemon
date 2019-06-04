@@ -19,13 +19,26 @@ public abstract class Entrenador implements PresentadorEntrenador{
 	private boolean luchando, cambiando, derrotado=false;
 
 	private List<Pokemon> listaPokemon = new ArrayList<>();
-	protected Pokemon pokemonCombatiente;
+	private Pokemon pokemonCombatiente;
 	
 	public abstract void cambiarPokemon(Pokemon pokemon);
 	
 	public abstract void elegirSiguienteMovimiento(Pokemon pokemon);
 	
 	public abstract int elegirOpcionCombate();
+	
+	/*Metodo para asignar X pokemon a un entrenador*/	
+	public void darPokemon(int numPokemon){
+		Random rdm = new Random();
+		FactoriaPokemon factoriaPokemon = new GenerarPokemon();
+		Set<Pokemon> pokemon = new HashSet<>();
+		
+		do {
+			pokemon.add(factoriaPokemon.generarPokemon(rdm.nextInt(factoriaPokemon.getNumeroEspecies())+1));
+		}while(pokemon.size() < numPokemon);
+		
+		listaPokemon.addAll(pokemon);
+	}
 	
 	
 	/*GETTERS Y SETTERS*/
@@ -73,20 +86,7 @@ public abstract class Entrenador implements PresentadorEntrenador{
 		return pokemonCombatiente;
 	}
 	
-	/*Metodo para asignar X pokemon a un entrenador*/	
-	public void darPokemon(int numPokemon){
-		Random rdm = new Random();
-		FactoriaPokemon factoriaPokemon = new GenerarPokemon();
-		Set<Pokemon> pokemon = new HashSet<>();
-		
-		do {
-			pokemon.add(factoriaPokemon.generarPokemon(rdm.nextInt(factoriaPokemon.getNumeroEspecies())+1));
-		}while(pokemon.size() < numPokemon);
-		
-		listaPokemon.addAll(pokemon);
-	}
-
-
+	/*METODOS PRESENTADOR*/
 	public String pedirNombreUsuario() {
 		return presentadorEntrenador.pedirNombreUsuario();
 	}

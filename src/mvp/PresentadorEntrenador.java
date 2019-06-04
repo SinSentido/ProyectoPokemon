@@ -6,8 +6,8 @@ import proyectoPokemon.Pokemon;
 
 public interface PresentadorEntrenador {
 	
-	public abstract String pedirNombreUsuario();
-	public abstract String pedirNombreMaquina();
+	public String pedirNombreUsuario();
+	public String pedirNombreMaquina();
 	
 	public void cambiarAPokemonDebilitado();
 	public void cambiarAMismoPokemon();

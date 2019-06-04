@@ -50,7 +50,7 @@ public enum Database {
 	
 	/*Metodos para cargar los datos en sus mapas correspondientes*/
 	
-	public void cargarEfectividades() {//carga los datos de las efectividades en el mapa efectividades
+	private void cargarEfectividades() {//carga los datos de las efectividades en el mapa efectividades
 		Stream<String> linea;
 		try(BufferedReader objReader=new BufferedReader(new FileReader("FicheroEfectividades.csv"))){
 			linea=objReader.lines();

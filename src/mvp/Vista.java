@@ -261,22 +261,22 @@ public class Vista implements PresentadorVista{
 	
 	/*Metodos para mostrar los datos de los pokemon*/
 	//Para mostrar el nombre de un pokemon
-	public String mostrarNombrePokemon(Pokemon pokemon) {
+	private String mostrarNombrePokemon(Pokemon pokemon) {
 		return String.format("[%s]", pokemon.getEspecie().getNombre());
 	}
 	
 	//Para mostrar la vida de un pokemon
-	public String mostrarVidaPokemon(Pokemon pokemon) {
+	private String mostrarVidaPokemon(Pokemon pokemon) {
 		return String.format("[%d / %d]", pokemon.getVida(), pokemon.getEspecie().getVida());
 	}
 	
 	//Para mostrar el estado de un pokemon
-	public String mostrarEstadoPokemon(Pokemon pokemon) {
+	private String mostrarEstadoPokemon(Pokemon pokemon) {
 		return String.format("[%s]", pokemon.getEstado().getNombre());
 	}
 	
 	//Para mostrar todos los datos del pokemon
-	public String mostrarDatosPokemon(Pokemon pokemon) {
+	private String mostrarDatosPokemon(Pokemon pokemon) {
 		return String.format("%s%s%s", mostrarNombrePokemon(pokemon)
 				,mostrarEstadoPokemon(pokemon)
 				,mostrarVidaPokemon(pokemon));

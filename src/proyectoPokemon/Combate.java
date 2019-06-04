@@ -169,7 +169,7 @@ public class Combate implements  PresentadorCombate {
 		return pokUsuario.getVelocidad()>pokRival.getVelocidad()?true:false;
 	}
 	
-	private static boolean comprobarPokemonVivos(Entrenador entrenador) {
+	private boolean comprobarPokemonVivos(Entrenador entrenador) {
 		boolean pokemonVivos = false;
 		for(Pokemon e : entrenador.getListaPokemon()) {
 			if(!(e.getEstado() instanceof Debilitado)) {
@@ -179,9 +179,24 @@ public class Combate implements  PresentadorCombate {
 		return pokemonVivos;
 	}
 	
+	/*Metodo que aplica los efectos de los estados y comprueba si el pokemon se debilita o no*/
 	private void resolverEstados(Entrenador entrenador1, Entrenador entrenador2) {
 		entrenador1.getPokemonCombatiente().getEstado().resolverEstado(entrenador1.getPokemonCombatiente());
 		entrenador2.getPokemonCombatiente().getEstado().resolverEstado(entrenador2.getPokemonCombatiente());
+		
+		if(entrenador1.getPokemonCombatiente().getEstado() instanceof Debilitado) {
+			if(!comprobarPokemonVivos(entrenador1)) {
+				entrenador1.setDerrotado(true);
+				mostrarMensajeFueraDeCombate(entrenador1);
+			}
+		}
+		
+		if(entrenador2.getPokemonCombatiente().getEstado() instanceof Debilitado) {
+			if(!comprobarPokemonVivos(entrenador2)) {
+				entrenador2.setDerrotado(true);
+				mostrarMensajeFueraDeCombate(entrenador2);
+			}
+		}
 	}
 	
 	private boolean menuFinDelJuego(Entrenador entrenador1, Entrenador entrenador2) {
@@ -211,7 +226,7 @@ public class Combate implements  PresentadorCombate {
 	}
 	
 	//Metodo para reiniciar las estadisticas de todos los pokemon de un entrenador.
-	private static void curarPokemon(Entrenador entrenador) {
+	private void curarPokemon(Entrenador entrenador) {
 		for(Pokemon e : entrenador.getListaPokemon()) {
 			e.setEstado(new Sano());
 			e.setVida(e.getEspecie().getVida());

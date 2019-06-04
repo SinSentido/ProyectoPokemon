@@ -37,7 +37,7 @@ public class Dormido implements Estado, PresentadorDormido{
 		maxTurnosDorm = rdm.nextInt(5)+1;
 	}
 
-	@Override
+	/*METODOS PRESENTADOR*/
 	public void mostrarMensajeAtacarDormido(Pokemon pokemon) {
 		presentadorDormido.mostrarMensajeAtacarDormido(pokemon);
 	}

@@ -17,7 +17,7 @@ public class Usuario extends Entrenador{
 			}
 			else {
 				eleccionValida = true;
-				pokemonCombatiente = nuevoPokemon;
+				setPokemonCombatiente(nuevoPokemon);
 			}
 		}while(!eleccionValida);
 	}
@@ -28,13 +28,5 @@ public class Usuario extends Entrenador{
 	
 	public int elegirOpcionCombate() {
 		return ejecutarMenuCombate();
-	}
-	
-	public void setPokemonCombatiente(Pokemon pokemon) {
-		pokemonCombatiente = pokemon;
-	}
-	
-	public Pokemon getPokemonCombatiente() {
-		return pokemonCombatiente;
 	}
 }

@@ -15,11 +15,11 @@ public class Pokemon{
 	private Especie especie;
 	private Movimiento proximoMovimiento;
 	
-	private final Estado sano = new Sano();
-	private final Estado dormido = new Dormido();
-	private final Estado envenenado = new Envenenado();
-	private final Estado paralizado = new Paralizado();
-	private final Estado debilitado = new Debilitado();
+	private final Estado SANO = new Sano();
+	private final Estado DORMIDO = new Dormido();
+	private final Estado ENVENENADO = new Envenenado();
+	private final Estado PARALIZADO = new Paralizado();
+	private final Estado DEBILITADO = new Debilitado();
 
 	public Pokemon(Especie especie) {
 		this.vida = especie.getVida();
@@ -65,30 +65,28 @@ public class Pokemon{
 	}
 	
 	public void moveToSanoState() {
-		estado = sano;
+		estado = SANO;
 		velocidad = especie.getVelocidad();
 	}
 	
 	public void moveToDormidoState() {
-		estado = dormido;
-		((Dormido) dormido).turnosDormido();
+		estado = DORMIDO;
+		((Dormido) DORMIDO).turnosDormido();
 	}
 	
 	public void moveToEnvenenadoState() {
-		estado = envenenado;
+		estado = ENVENENADO;
 	}
 	
 	public void moveToParalizadoState() {
-		estado = paralizado;
+		estado = PARALIZADO;
 		velocidad = especie.getVelocidad()/2;
 	}
 	
 	public void moveToDebilitadoState() {
-		estado = debilitado;
+		estado = DEBILITADO;
 	}
 	
-	
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -96,7 +94,6 @@ public class Pokemon{
 		return result;
 	}
 
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
