@@ -34,7 +34,6 @@ public class Especial implements Categoria, PresentadorFisicoEspecial{
 			//Se comprueba si el pokemon se ha debilitado y si es el caso se cambia su estado.
 			if(pokemonObjetivo.getVida() <= 0) {
 				pokemonObjetivo.moveToDebilitadoState();
-				mostrarMensajePokemonDebilitado(pokemonObjetivo);
 			}
 		}
 		else { //si falla el ataque
@@ -70,10 +69,6 @@ public class Especial implements Categoria, PresentadorFisicoEspecial{
 	/*METODOS DEL PRESENTADOR*/
 	public void mostrarMensajeFalloAtaque() {
 		presentadorEspecial.mostrarMensajeFalloAtaque();
-	}
-
-	public void mostrarMensajePokemonDebilitado(Pokemon pokemon) {
-		presentadorEspecial.mostrarMensajePokemonDebilitado(pokemon);
 	}
 
 	public void mostrarMensajeDañoAtaque(Pokemon pokemon, double daño) {

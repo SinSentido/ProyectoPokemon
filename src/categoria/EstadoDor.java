@@ -18,7 +18,6 @@ public class EstadoDor implements Categoria, PresentadorEstadoDor{
 			}
 			else {
 				pokemonObjetivo.moveToDormidoState();
-				mostrarMensajeDormido(pokemonObjetivo);
 			}
 		}
 		else {
@@ -36,7 +35,4 @@ public class EstadoDor implements Categoria, PresentadorEstadoDor{
 		presentadorEstadoDor.mostrarMensajeYaTieneEstado(pokemon);
 	}
 
-	public void mostrarMensajeDormido(Pokemon pokemon) {
-		presentadorEstadoDor.mostrarMensajeDormido(pokemon);
-	}
 }

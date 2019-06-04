@@ -18,7 +18,6 @@ public class EstadoPar implements Categoria, PresentadorEstadoPar{
 			}
 			else {
 				pokemonObjetivo.moveToParalizadoState();
-				mostrarMensajeParalizado(pokemonObjetivo);	
 			}
 		}
 		else {
@@ -34,10 +33,4 @@ public class EstadoPar implements Categoria, PresentadorEstadoPar{
 	public void mostrarMensajeYaTieneEstado(Pokemon pokemon) {
 		presentadorEstadoPar.mostrarMensajeYaTieneEstado(pokemon);
 	}
-
-	public void mostrarMensajeParalizado(Pokemon pokemon) {
-		presentadorEstadoPar.mostrarMensajeParalizado(pokemon);
-	}
-
-
 }

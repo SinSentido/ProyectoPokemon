@@ -18,7 +18,6 @@ public class EstadoEnv implements Categoria, PresentadorEstadoEnv{
 			}
 			else {
 				pokemonObjetivo.moveToEnvenenadoState();
-				mostrarMensajeEnvenenado(pokemonObjetivo);
 			}
 		}
 		else {
@@ -35,11 +34,4 @@ public class EstadoEnv implements Categoria, PresentadorEstadoEnv{
 		presentadorEstadoEnv.mostrarMensajeYaTieneEstado(pokemon);
 	}
 
-	public void mostrarMensajePokemonDebilitado(Pokemon pokemon) {
-		presentadorEstadoEnv.mostrarMensajePokemonDebilitado(pokemon);
-	}
-
-	public void mostrarMensajeEnvenenado(Pokemon pokemon) {
-		presentadorEstadoEnv.mostrarMensajeEnvenenado(pokemon);
-	}
 }

@@ -8,8 +8,11 @@ import estados.Envenenado;
 import estados.Estado;
 import estados.Paralizado;
 import estados.Sano;
+import mvp.Presentador;
+import mvp.PresentadorPokemon;
 
-public class Pokemon{
+public class Pokemon implements PresentadorPokemon{
+	private Presentador presentadorPokemon = new Presentador();
 	private int vida, velocidad;
 	private Estado estado;
 	private Especie especie;
@@ -72,19 +75,23 @@ public class Pokemon{
 	public void moveToDormidoState() {
 		estado = DORMIDO;
 		((Dormido) DORMIDO).turnosDormido();
+		mostrarMensajeDormido(this);
 	}
 	
 	public void moveToEnvenenadoState() {
 		estado = ENVENENADO;
+		mostrarMensajeEnvenenado(this);
 	}
 	
 	public void moveToParalizadoState() {
 		estado = PARALIZADO;
 		velocidad = especie.getVelocidad()/2;
+		mostrarMensajeParalizado(this);
 	}
 	
 	public void moveToDebilitadoState() {
 		estado = DEBILITADO;
+		mostrarMensajeDebilitado(this);
 	}
 	
 	public int hashCode() {
@@ -108,5 +115,23 @@ public class Pokemon{
 		} else if (!especie.equals(other.especie))
 			return false;
 		return true;
+	}
+	
+	/**/
+
+	public void mostrarMensajeDebilitado(Pokemon pokemon) {
+		presentadorPokemon.mostrarMensajePokemonDebilitado(pokemon);
+	}
+	
+	public void mostrarMensajeDormido(Pokemon pokemon) {
+		presentadorPokemon.mostrarMensajeDormido(pokemon);
+	}
+	
+	public void mostrarMensajeEnvenenado(Pokemon pokemon) {
+		presentadorPokemon.mostrarMensajeEnvenenado(pokemon);
+	}
+	
+	public void mostrarMensajeParalizado(Pokemon pokemon) {
+		presentadorPokemon.mostrarMensajeParalizado(pokemon);
 	}
 }

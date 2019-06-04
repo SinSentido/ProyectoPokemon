@@ -28,7 +28,7 @@ public class Combate implements  PresentadorCombate {
 		/*Comienza el combate*/
 		do {
 			/*Se muestran los pokemon del usuario*/
-			mostrarListaPokemon(usuario);
+			usuario.mostrarListaPokemon(usuario);
 			
 			mostrarInicioCombate(usuario, rival);
 			do {
@@ -239,10 +239,6 @@ public class Combate implements  PresentadorCombate {
 
 	public void presentacionCombate(String nombreUsuario, String nombreRival) {
 		presentadorCombate.presentacionCombate(nombreUsuario, nombreRival);
-	}
-
-	public void mostrarListaPokemon(Entrenador entrenador) {
-		presentadorCombate.mostrarListaPokemon(entrenador);
 	}
 
 	public void mostrarInicioCombate(Entrenador usuario, Entrenador rival) {

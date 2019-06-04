@@ -114,4 +114,8 @@ public abstract class Entrenador implements PresentadorEntrenador{
 	public int ejecutarMenuCombate() {
 		return presentadorEntrenador.ejecutarMenuCombate();
 	}
+	
+	public void mostrarListaPokemon(Entrenador entrenador) {
+		presentadorEntrenador.mostrarListaPokemon(entrenador);
+	}
 }

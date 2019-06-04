@@ -8,10 +8,9 @@ public interface PresentadorEntrenador {
 	
 	public String pedirNombreUsuario();
 	public String pedirNombreMaquina();
-	
 	public void cambiarAPokemonDebilitado();
 	public void cambiarAMismoPokemon();
-	
+	public void mostrarListaPokemon(Entrenador entrenador);
 	public Pokemon ejecutarMenuCambiarPokemon(Entrenador usuario);
 	public Movimiento ejecutarMenuMovimientos(Pokemon pokemon);
 	public int ejecutarMenuCombate();
