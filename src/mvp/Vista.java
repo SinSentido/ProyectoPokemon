@@ -126,7 +126,7 @@ public class Vista implements PresentadorVista{
 	
 	/*Mensaje que se muestra cuando falla un ataque*/
 	public void mostrarMensajeFalloAtaque() {
-		efectoEscrito("El ataque ha fallado", 30);
+		efectoEscrito("El ataque ha fallado\n", 30);
 	}
 	
 	/*Mensaje que se muestra cuando un ataque duerme a un pokemon*/

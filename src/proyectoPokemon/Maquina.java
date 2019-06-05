@@ -3,6 +3,10 @@ package proyectoPokemon;
 import java.util.Random;
 
 public class Maquina extends Entrenador{
+	
+	public Maquina() {
+		setNombre("Blue");
+	}
 
 	private Random rdm = new Random();
 

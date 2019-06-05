@@ -1,5 +1,7 @@
 package baseDeDatos;
 
+import java.util.Map;
+
 import categoria.Categoria;
 
 public class Movimiento {
@@ -8,14 +10,17 @@ public class Movimiento {
 	private String nombre;
 	private Categoria categoria;
 	private Tipo tipo;
+	private final Map<Integer, Double> efectividades;
 	
-	public Movimiento( int id, String nombre, int potencia, int precision, Categoria categoria, Tipo tipo){
+	public Movimiento( int id, String nombre, int potencia, int precision, Categoria categoria, Tipo tipo,
+			Map<Integer, Double> efectividades){
 		this.id = id;
 		this.nombre = nombre;
 		this.potencia = potencia;
 		this.precision = precision;
 		this.categoria = categoria;
 		this.tipo = tipo;
+		this.efectividades = efectividades;
 	}
 
 	public int getId() {

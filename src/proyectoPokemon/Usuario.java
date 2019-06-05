@@ -2,6 +2,10 @@ package proyectoPokemon;
 
 public class Usuario extends Entrenador{
 	
+	public Usuario() {
+		setNombre("Red");
+	}
+	
 	public void cambiarPokemon(Pokemon pokemon) {
 		boolean eleccionValida = false;
 		Pokemon nuevoPokemon;

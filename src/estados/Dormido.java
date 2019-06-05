@@ -19,7 +19,7 @@ public class Dormido implements Estado, PresentadorDormido{
 
 	public void atacar(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
 		if(contador == maxTurnosDorm) { //El pokemon se despierta
-			contador = 1;
+			contador = 0;
 			
 			//Se cambia el estado del pokemon a Sano
 			pokemonAtacante.moveToSanoState();
@@ -31,6 +31,7 @@ public class Dormido implements Estado, PresentadorDormido{
 		else { //El pokemon no puede atacar porque sigue dormido
 			mostrarMensajeAtacarDormido(pokemonAtacante);
 		}
+		contador++;
 	}
 	
 	public void turnosDormido() {
@@ -42,12 +43,10 @@ public class Dormido implements Estado, PresentadorDormido{
 		presentadorDormido.mostrarMensajeAtacarDormido(pokemon);
 	}
 
-	@Override
 	public void mostrarMensajeDespertar(Pokemon pokemon) {
 		presentadorDormido.mostrarMensajeDespertar(pokemon);
 	}
 	
 	public void resolverEstado(Pokemon pokemon) {
-		contador++;
 	}
 }

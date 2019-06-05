@@ -25,8 +25,8 @@ public enum Database {
 	private Map<Integer, Tipo> tipos = new HashMap<>();
 	
 	Database(){
-		cargarEfectividades();
 		cargarTipos();
+		cargarEfectividades();
 		cargarMovimientos();
 		cargarEspecies();
 	}
@@ -87,7 +87,8 @@ public enum Database {
 					.collect(Collectors.toMap(clave -> Integer.parseInt(clave[0]),
 							valor -> new Movimiento(Integer.parseInt(valor[0]),  valor[1], Integer.parseInt(valor[2]),
 							Integer.parseInt(valor[3]), elegirCategoria(valor[4]), 
-							tipos.get(Integer.parseInt(valor[5])))));
+							tipos.get(Integer.parseInt(valor[5])),
+							efectividades.get(Integer.parseInt(valor[5])))));
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
