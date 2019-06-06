@@ -20,9 +20,9 @@ public class Fisico implements Categoria, PresentadorFisicoEspecial{
 			
 			//Asigno el valor a las variables de la formula
 			n = 50; //Nivel del pokemon
-			a = pokemonAtacante.getEspecie().getAtaque(); //Ataque especial del pokemon
+			a = pokemonAtacante.getEspecie().getAtaque(); //Ataque fisico del pokemon
 			p = pokemonAtacante.getProximoMovimiento().getPotencia(); //Potencia del ataque
-			d = pokemonObjetivo.getEspecie().getDefensa(); //Defensa especial del pokemon
+			d = pokemonObjetivo.getEspecie().getDefensa(); //Defensa fisica del pokemon
 			b = pokemonAtacante.getProximoMovimiento().getTipo() //Bonificacion
 					.equals(pokemonAtacante.getEspecie().getTipo())?1.5:1; 
 			e = calcularEfectividad(pokemonAtacante.getProximoMovimiento(), pokemonObjetivo); //Efectividad del ataque
@@ -55,8 +55,7 @@ public class Fisico implements Categoria, PresentadorFisicoEspecial{
 			subtipo = Database.INSTANCE.getEfectividades().get(movimiento.getTipo().getId())
 					.get(pokemonObjetivo.getEspecie().getSubtipo().getId());
 		}
-		
-		
+			
 		total = tipo*subtipo;
 	
 		return total;

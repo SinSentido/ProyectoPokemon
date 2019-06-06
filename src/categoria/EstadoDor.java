@@ -2,6 +2,7 @@ package categoria;
 
 import java.util.Random;
 
+
 import estados.Sano;
 import mvp.Presentador;
 import mvp.PresentadorEstadoDor;

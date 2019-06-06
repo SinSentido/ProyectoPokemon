@@ -6,5 +6,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/home/sinsentido/Descargas/PruebasMockito/lib/byte-buddy-1.9.12.jar"/>
+	<classpathentry kind="lib" path="/home/sinsentido/Descargas/PruebasMockito/lib/byte-buddy-agent-1.9.12.jar"/>
+	<classpathentry kind="lib" path="/home/sinsentido/Descargas/PruebasMockito/lib/mockito-core-2.27.0.jar"/>
+	<classpathentry kind="lib" path="/home/sinsentido/Descargas/PruebasMockito/lib/objenesis-3.0.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import baseDeDatos.Database;
 import baseDeDatos.Movimiento;
 import factoriaPokemon.FactoriaPokemon;
 import factoriaPokemon.GenerarPokemon;
@@ -32,6 +33,11 @@ public abstract class Entrenador implements PresentadorEntrenador{
 		Random rdm = new Random();
 		FactoriaPokemon factoriaPokemon = new GenerarPokemon();
 		Set<Pokemon> pokemon = new HashSet<>();
+		
+		if(numPokemon > Database.INSTANCE.getEspecies().size() || numPokemon <= 0 ) {
+			throw new IllegalArgumentException("El número de pokemon no repetidos no puede ser superior al número"
+					+ "de pokemon en la base de datos o menor de 1");
+		}
 		
 		do {
 			pokemon.add(factoriaPokemon.generarPokemon(rdm.nextInt(factoriaPokemon.getNumeroEspecies())+1));
