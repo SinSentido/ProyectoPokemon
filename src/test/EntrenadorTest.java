@@ -36,7 +36,7 @@ class EntrenadorTest {
 	
 	/*Se le piden todos pokemon a la factoria*/
 	@Test
-	void testPedir31Pokemon() {
+	void testPedirTodosLosPokemon() {
 		int maxNumPokemon = Database.INSTANCE.getEspecies().size();
 		entrenador.darPokemon(maxNumPokemon);
 		

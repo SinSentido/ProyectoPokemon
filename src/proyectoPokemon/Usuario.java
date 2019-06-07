@@ -1,6 +1,11 @@
 package proyectoPokemon;
 
-public class Usuario extends Entrenador{
+import baseDeDatos.Movimiento;
+import mvp.Presentador;
+import mvp.PresentadorUsuario;
+
+public class Usuario extends Entrenador implements PresentadorUsuario{
+	private Presentador presentadorUsuario = new Presentador();
 	
 	public Usuario() {
 		setNombre("Red");
@@ -32,5 +37,34 @@ public class Usuario extends Entrenador{
 	
 	public int elegirOpcionCombate() {
 		return ejecutarMenuCombate();
+	}
+	
+	/*METODOS PRESENTADOR*/
+	public String pedirNombreUsuario() {
+		return presentadorUsuario.pedirNombreUsuario();
+	}
+	
+	public void cambiarAPokemonDebilitado() {
+		presentadorUsuario.cambiarAPokemonDebilitado();
+	}
+
+	public void cambiarAMismoPokemon() {
+		presentadorUsuario.cambiarAMismoPokemon();
+	}
+
+	public Pokemon ejecutarMenuCambiarPokemon(Entrenador usuario) {
+		return presentadorUsuario.ejecutarMenuCambiarPokemon(usuario);
+	}
+
+	public Movimiento ejecutarMenuMovimientos(Pokemon pokemon) {
+		return presentadorUsuario.ejecutarMenuMovimientos(pokemon);
+	}
+
+	public int ejecutarMenuCombate() {
+		return presentadorUsuario.ejecutarMenuCombate();
+	}
+	
+	public void mostrarListaPokemon(Entrenador entrenador) {
+		presentadorUsuario.mostrarListaPokemon(entrenador);
 	}
 }

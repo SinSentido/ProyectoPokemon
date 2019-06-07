@@ -3,19 +3,13 @@ package proyectoPokemon;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import baseDeDatos.Database;
-import baseDeDatos.Movimiento;
 import factoriaPokemon.FactoriaPokemon;
 import factoriaPokemon.GenerarPokemon;
-import mvp.Presentador;
-import mvp.PresentadorEntrenador;
 
-public abstract class Entrenador implements PresentadorEntrenador{
-	
-	private Presentador presentadorEntrenador = new Presentador();
+public abstract class Entrenador{
 	private String nombre;
 	private boolean luchando, cambiando, derrotado=false;
 
@@ -30,7 +24,6 @@ public abstract class Entrenador implements PresentadorEntrenador{
 	
 	/*Metodo para asignar X pokemon a un entrenador*/	
 	public void darPokemon(int numPokemon){
-		Random rdm = new Random();
 		FactoriaPokemon factoriaPokemon = new GenerarPokemon();
 		Set<Pokemon> pokemon = new HashSet<>();
 		
@@ -40,7 +33,7 @@ public abstract class Entrenador implements PresentadorEntrenador{
 		}
 		
 		do {
-			pokemon.add(factoriaPokemon.generarPokemon(rdm.nextInt(factoriaPokemon.getNumeroEspecies())+1));
+			pokemon.add(factoriaPokemon.generarPokemon());
 		}while(pokemon.size() < numPokemon);
 		
 		listaPokemon.addAll(pokemon);
@@ -90,38 +83,5 @@ public abstract class Entrenador implements PresentadorEntrenador{
 	
 	public Pokemon getPokemonCombatiente() {
 		return pokemonCombatiente;
-	}
-	
-	/*METODOS PRESENTADOR*/
-	public String pedirNombreUsuario() {
-		return presentadorEntrenador.pedirNombreUsuario();
-	}
-
-	public String pedirNombreMaquina() {
-		return presentadorEntrenador.pedirNombreMaquina();
-	}
-
-	public void cambiarAPokemonDebilitado() {
-		presentadorEntrenador.cambiarAPokemonDebilitado();
-	}
-
-	public void cambiarAMismoPokemon() {
-		presentadorEntrenador.cambiarAMismoPokemon();
-	}
-
-	public Pokemon ejecutarMenuCambiarPokemon(Entrenador usuario) {
-		return presentadorEntrenador.ejecutarMenuCambiarPokemon(usuario);
-	}
-
-	public Movimiento ejecutarMenuMovimientos(Pokemon pokemon) {
-		return presentadorEntrenador.ejecutarMenuMovimientos(pokemon);
-	}
-
-	public int ejecutarMenuCombate() {
-		return presentadorEntrenador.ejecutarMenuCombate();
-	}
-	
-	public void mostrarListaPokemon(Entrenador entrenador) {
-		presentadorEntrenador.mostrarListaPokemon(entrenador);
 	}
 }

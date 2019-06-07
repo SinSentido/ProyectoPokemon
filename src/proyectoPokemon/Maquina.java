@@ -2,7 +2,11 @@ package proyectoPokemon;
 
 import java.util.Random;
 
-public class Maquina extends Entrenador{
+import mvp.Presentador;
+import mvp.PresentadorMaquina;
+
+public class Maquina extends Entrenador implements PresentadorMaquina{
+	private Presentador presentadorMaquina = new Presentador();
 	
 	public Maquina() {
 		setNombre("Blue");
@@ -22,5 +26,10 @@ public class Maquina extends Entrenador{
 
 	public int elegirOpcionCombate() {
 		return 1;
+	}
+
+	/*METODOS PRESENTADOR*/
+	public String pedirNombreMaquina() {
+		return presentadorMaquina.pedirNombreMaquina();
 	}
 }

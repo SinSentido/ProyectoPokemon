@@ -13,11 +13,11 @@ public class Combate implements  PresentadorCombate {
 		boolean combate = true;
 		
 		/**************COMENTAR ESTE BLOQUE PARA SALTAR LA INTRODUCCION DEL JUEGO**********************/
-		/*Se les asigna los nombres a los usuarios*/
-		usuario.setNombre(usuario.pedirNombreUsuario());
-		rival.setNombre(rival.pedirNombreMaquina());
-		
-		presentacionCombate(usuario.getNombre(), rival.getNombre());
+//		/*Se les asigna los nombres a los usuarios*/
+//		usuario.setNombre(usuario.pedirNombreUsuario());
+//		rival.setNombre(rival.pedirNombreMaquina());
+//		
+//		presentacionCombate(usuario.getNombre(), rival.getNombre());
 		/**********************************************************************************************/
 		
 		/*Se les asigna los pokemon a los entrenadores*/
@@ -30,7 +30,7 @@ public class Combate implements  PresentadorCombate {
 		/*Comienza el combate*/
 		do {
 			/*Se muestran los pokemon del usuario*/
-			usuario.mostrarListaPokemon(usuario);
+			((Usuario)usuario).mostrarListaPokemon(usuario);
 			
 			mostrarInicioCombate(usuario, rival);
 			do {
@@ -89,18 +89,18 @@ public class Combate implements  PresentadorCombate {
 		//quien ataca en primer lugar
 		if(compararVelocidad(entrenador1.getPokemonCombatiente(), entrenador2.getPokemonCombatiente())) {			
 			//El entrenador1 ataca primero
-			ataqueEntrenador(entrenador1, entrenador2); 
+			ataqueEntrenador(entrenador1, entrenador2);
 			ataqueEntrenador(entrenador2, entrenador1);
-			
-			//Al acabar el turno se aplican los efectos de los estados de los pokemon
-			resolverEstados(entrenador1, entrenador2);
 		}
 		
 		//El entrenador 2 ataca primero
 		else {
 			ataqueEntrenador(entrenador2, entrenador1);
-			ataqueEntrenador(entrenador1, entrenador2);		
-			
+			ataqueEntrenador(entrenador1, entrenador2);
+		}
+		
+		//Al acabar el turno se aplican los efectos de los estados de los pokemon
+		if(!entrenador1.isDerrotado() && !entrenador2.isDerrotado()) {
 			resolverEstados(entrenador1, entrenador2);
 		}
 	}
@@ -150,6 +150,10 @@ public class Combate implements  PresentadorCombate {
 				entrenador1.setDerrotado(true);
 				mostrarMensajeFueraDeCombate(entrenador1);
 			}
+			else {
+				entrenador1.cambiarPokemon(entrenador1.getPokemonCombatiente());
+				mostrarMensajeCambio(entrenador1);
+			}
 		}
 		
 		entrenador2.getPokemonCombatiente().getEstado().resolverEstado(entrenador2.getPokemonCombatiente());
@@ -158,6 +162,10 @@ public class Combate implements  PresentadorCombate {
 			if(!comprobarPokemonVivos(entrenador2)) {
 				entrenador2.setDerrotado(true);
 				mostrarMensajeFueraDeCombate(entrenador2);
+			}
+			else {
+				entrenador2.cambiarPokemon(entrenador2.getPokemonCombatiente());
+				mostrarMensajeCambio(entrenador2);
 			}
 		}
 	}

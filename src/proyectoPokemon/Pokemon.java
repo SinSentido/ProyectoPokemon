@@ -69,7 +69,6 @@ public class Pokemon implements PresentadorPokemon{
 	
 	public void moveToSanoState() {
 		estado = SANO;
-		velocidad = especie.getVelocidad();
 	}
 	
 	public void moveToDormidoState() {
