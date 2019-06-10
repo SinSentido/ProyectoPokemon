@@ -15,14 +15,14 @@ public class EstadoDor implements Categoria, PresentadorEstadoDor{
 	public void calcularDaño(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
 		if(rdm.nextInt(100) <= pokemonAtacante.getProximoMovimiento().getPrecision()) { //Si el ataque acierta
 			if(!(pokemonObjetivo.getEstado() instanceof Sano)) {
-				mostrarMensajeYaTieneEstado(pokemonObjetivo);
+//				mostrarMensajeYaTieneEstado(pokemonObjetivo);
 			}
 			else {
 				pokemonObjetivo.moveToDormidoState();
 			}
 		}
 		else {
-			mostrarMensajeFalloAtaque();
+//			mostrarMensajeFalloAtaque();
 		}
 	}
 

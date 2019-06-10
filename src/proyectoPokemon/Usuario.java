@@ -31,7 +31,7 @@ public class Usuario extends Entrenador implements PresentadorUsuario{
 		}while(!eleccionValida);
 	}
 
-	public void elegirSiguienteMovimiento(Pokemon pokemon) {
+	public void elegirSiguienteMovimiento(Pokemon pokemon, Pokemon pokemonRival) {
 		pokemon.setProximoMovimiento(ejecutarMenuMovimientos(pokemon));
 	}
 	

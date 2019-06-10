@@ -14,14 +14,14 @@ public class EstadoEnv implements Categoria, PresentadorEstadoEnv{
 	public void calcularDaño(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
 		if(rdm.nextInt(100) <= pokemonAtacante.getProximoMovimiento().getPrecision()) {
 			if(!(pokemonObjetivo.getEstado() instanceof Sano)) {
-				mostrarMensajeYaTieneEstado(pokemonObjetivo);
+//				mostrarMensajeYaTieneEstado(pokemonObjetivo);
 			}
 			else {
 				pokemonObjetivo.moveToEnvenenadoState();
 			}
 		}
 		else {
-			mostrarMensajeFalloAtaque();
+//			mostrarMensajeFalloAtaque();
 		}
 	}
 

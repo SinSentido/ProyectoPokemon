@@ -2,6 +2,7 @@ package proyectoPokemon;
 
 import java.util.Random;
 
+import estados.Debilitado;
 import mvp.Presentador;
 import mvp.PresentadorMaquina;
 
@@ -17,15 +18,19 @@ public class Maquina extends Entrenador implements PresentadorMaquina{
 	public void cambiarPokemon(Pokemon pokemon) {
 		do {
 			setPokemonCombatiente(getListaPokemon().get(rdm.nextInt(3)));
-		}while(getPokemonCombatiente().getEstado().getNombre().equals("Debilitado"));
+		}while(getPokemonCombatiente().getEstado() instanceof Debilitado);
 	}
 
-	public void elegirSiguienteMovimiento(Pokemon pokemon) {
+	public void elegirSiguienteMovimiento(Pokemon pokemon, Pokemon pokemonRival) {
 		pokemon.setProximoMovimiento(pokemon.getEspecie().getMovimientos().get(rdm.nextInt(4)));
 	}
 
 	public int elegirOpcionCombate() {
 		return 1;
+	}
+	
+	public void setNombre(String nombre) {
+		super.setNombre(nombre);
 	}
 
 	/*METODOS PRESENTADOR*/

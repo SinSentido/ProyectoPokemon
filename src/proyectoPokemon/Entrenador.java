@@ -11,14 +11,14 @@ import factoriaPokemon.GenerarPokemon;
 
 public abstract class Entrenador{
 	private String nombre;
-	private boolean luchando, cambiando, derrotado=false;
+	private boolean luchando, cambiando, derrotado=false, ganador=false;
 
 	private List<Pokemon> listaPokemon = new ArrayList<>();
 	private Pokemon pokemonCombatiente;
 	
 	public abstract void cambiarPokemon(Pokemon pokemon);
 	
-	public abstract void elegirSiguienteMovimiento(Pokemon pokemon);
+	public abstract void elegirSiguienteMovimiento(Pokemon pokemon, Pokemon pokemonRival);
 	
 	public abstract int elegirOpcionCombate();
 	
@@ -71,6 +71,14 @@ public abstract class Entrenador{
 
 	public void setDerrotado(boolean derrotado) {
 		this.derrotado = derrotado;
+	}
+	
+	public boolean isGanador() {
+		return ganador;
+	}
+	
+	public void setGanador(boolean ganador) {
+		this.ganador = ganador;
 	}
 	
 	public List<Pokemon> getListaPokemon(){

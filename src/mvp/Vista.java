@@ -202,7 +202,7 @@ public class Vista implements PresentadorVista{
 		efectoEscrito("\n*****Comienza el combate entre " + usuario.getNombre() 
 				+ " y " + rival.getNombre() + "*****\n", 30);
 		pausaDramatica();
-		efectoEscrito("\nHas sacado a " + mostrarNombrePokemon(usuario.getPokemonCombatiente()) + "\n", 30);
+		efectoEscrito("\n" + usuario.getNombre() + " ha sacado a " + mostrarNombrePokemon(usuario.getPokemonCombatiente()) + "\n", 30);
 		pausaDramatica();
 		efectoEscrito("\n" + rival.getNombre() + " ha sacado a " 
 				+ mostrarNombrePokemon(rival.getPokemonCombatiente()) + "\n", 30);

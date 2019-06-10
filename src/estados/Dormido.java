@@ -18,11 +18,14 @@ public class Dormido implements Estado, PresentadorDormido{
 	}
 
 	public void atacar(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
-		if(pokemonAtacante.getEstado() instanceof Sano) { //El pokemon se despierta
-			mostrarMensajeDespertar(pokemonAtacante);
-			
+		contador++;
+		if(contador == maxTurnosDorm) {
+			contador = 0;
+			pokemonAtacante.moveToSanoState();
+//			mostrarMensajeDespertar(pokemonAtacante);
 			pokemonAtacante.getEstado().atacar(pokemonAtacante, pokemonObjetivo);
 		}
+		
 		else { //El pokemon no puede atacar porque sigue dormido
 			mostrarMensajeAtacarDormido(pokemonAtacante);
 		}
@@ -50,10 +53,6 @@ public class Dormido implements Estado, PresentadorDormido{
 	}
 	
 	public void resolverEstado(Pokemon pokemon) {
-		contador++;
-		if(contador == maxTurnosDorm) {
-			contador = 0;
-			pokemon.moveToSanoState();
-		}
+
 	}
 }

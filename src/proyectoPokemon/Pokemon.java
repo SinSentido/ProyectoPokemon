@@ -74,23 +74,23 @@ public class Pokemon implements PresentadorPokemon{
 	public void moveToDormidoState() {
 		estado = DORMIDO;
 		((Dormido) DORMIDO).turnosDormido();
-		mostrarMensajeDormido(this);
+//		mostrarMensajeDormido(this);
 	}
 	
 	public void moveToEnvenenadoState() {
 		estado = ENVENENADO;
-		mostrarMensajeEnvenenado(this);
+//		mostrarMensajeEnvenenado(this);
 	}
 	
 	public void moveToParalizadoState() {
 		estado = PARALIZADO;
 		velocidad = especie.getVelocidad()/2;
-		mostrarMensajeParalizado(this);
+//		mostrarMensajeParalizado(this);
 	}
 	
 	public void moveToDebilitadoState() {
 		estado = DEBILITADO;
-		mostrarMensajeDebilitado(this);
+//		mostrarMensajeDebilitado(this);
 	}
 	
 	public int hashCode() {
