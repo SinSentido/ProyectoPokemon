@@ -14,14 +14,14 @@ public class EstadoPar implements Categoria, PresentadorEstadoPar{
 	public void calcularDaño(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
 		if(rdm.nextInt(100) <= pokemonAtacante.getProximoMovimiento().getPrecision()) {
 			if(!(pokemonObjetivo.getEstado() instanceof Sano)) {
-//				mostrarMensajeYaTieneEstado(pokemonObjetivo);
+				mostrarMensajeYaTieneEstado(pokemonObjetivo);
 			}
 			else {
 				pokemonObjetivo.moveToParalizadoState();
 			}
 		}
 		else {
-//			mostrarMensajeFalloAtaque();
+			mostrarMensajeFalloAtaque();
 		}
 	}
 

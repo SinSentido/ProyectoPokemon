@@ -13,11 +13,11 @@ public class Combate implements  PresentadorCombate {
 		boolean combate = true;
 		
 		/**************COMENTAR ESTE BLOQUE PARA SALTAR LA INTRODUCCION DEL JUEGO**********************/
-//		/*Se les asigna los nombres a los usuarios*/
-//		usuario.setNombre(usuario.pedirNombreUsuario());
-//		rival.setNombre(rival.pedirNombreMaquina());
-//		
-//		presentacionCombate(usuario.getNombre(), rival.getNombre());
+		/*Se les asigna los nombres a los usuarios*/
+		entrenador1.setNombre((((Usuario) entrenador1).pedirNombreUsuario()));
+		entrenador2.setNombre(((Maquina) entrenador2).pedirNombreMaquina());
+		
+		presentacionCombate(entrenador1.getNombre(), entrenador2.getNombre());
 		/**********************************************************************************************/
 		
 		/*Se les asigna los pokemon a los entrenadores*/
@@ -30,11 +30,11 @@ public class Combate implements  PresentadorCombate {
 		/*Comienza el combate*/
 		do {
 			/*Se muestran los pokemon del usuario*/
-//			entrenador1.mostrarListaPokemon(entrenador1);
+			((Usuario)entrenador1).mostrarListaPokemon(entrenador1);
 			
-//			mostrarInicioCombate(entrenador1, entrenador2);
+			mostrarInicioCombate(entrenador1, entrenador2);
 			do {
-//				mostrarPokemonLuchando(entrenador1, entrenador2);
+				mostrarPokemonLuchando(entrenador1, entrenador2);
 				
 				if(!entrenador1.isDerrotado() && !entrenador2.isDerrotado()) {
 					menuCombate(entrenador1, entrenador2);
@@ -45,12 +45,12 @@ public class Combate implements  PresentadorCombate {
 				}
 			}while(!entrenador1.isDerrotado() && !entrenador2.isDerrotado());
 			
-//			//Los entrenadores regresan a su estado normal
-//			entrenador1.setDerrotado(false);
-//			entrenador2.setDerrotado(false);
-//			
-//			//Se ejecuta el menu del final del juego
-//			combate = menuFinDelJuego(entrenador1, entrenador2);
+			//Los entrenadores regresan a su estado normal
+			entrenador1.setDerrotado(false);
+			entrenador2.setDerrotado(false);
+			
+			//Se ejecuta el menu del final del juego
+			combate = menuFinDelJuego(entrenador1, entrenador2);
 			
 			combate = false;
 			
@@ -81,10 +81,10 @@ public class Combate implements  PresentadorCombate {
 	private  void efectuarTurno(Entrenador entrenador1, Entrenador entrenador2) {	
 		//Primero se realizan los cambios de los entrenadores que hayan decidido cambiar
 		if(entrenador1.isCambiando()){
-//			mostrarMensajeCambio(entrenador1);
+			mostrarMensajeCambio(entrenador1);
 		}	
 		else if(entrenador2.isCambiando()) {
-//			mostrarMensajeCambio(entrenador2);
+			mostrarMensajeCambio(entrenador2);
 		}
 		
 		//Despues de realizar los cambios se efectuan los ataques. Primero se comprueba la velocidad para ver 
@@ -116,13 +116,13 @@ public class Combate implements  PresentadorCombate {
 				if(!comprobarPokemonVivos(rival)) {
 					rival.setDerrotado(true);
 					entrenador.setGanador(true);
-//					mostrarMensajeFueraDeCombate(rival);
+					mostrarMensajeFueraDeCombate(rival);
 				}
 				else {
 					rival.setCambiando(true);
 					rival.setLuchando(false);
 					rival.cambiarPokemon(rival.getPokemonCombatiente());
-//					mostrarMensajeCambio(rival);
+					mostrarMensajeCambio(rival);
 				}
 			}
 		}
@@ -151,11 +151,11 @@ public class Combate implements  PresentadorCombate {
 		if(entrenador1.getPokemonCombatiente().getEstado() instanceof Debilitado) {
 			if(!comprobarPokemonVivos(entrenador1)) {
 				entrenador1.setDerrotado(true);
-//				mostrarMensajeFueraDeCombate(entrenador1);
+				mostrarMensajeFueraDeCombate(entrenador1);
 			}
 			else {
 				entrenador1.cambiarPokemon(entrenador1.getPokemonCombatiente());
-//				mostrarMensajeCambio(entrenador1);
+				mostrarMensajeCambio(entrenador1);
 			}
 		}
 		
@@ -164,11 +164,11 @@ public class Combate implements  PresentadorCombate {
 		if(entrenador2.getPokemonCombatiente().getEstado() instanceof Debilitado) {
 			if(!comprobarPokemonVivos(entrenador2)) {
 				entrenador2.setDerrotado(true);
-//				mostrarMensajeFueraDeCombate(entrenador2);
+				mostrarMensajeFueraDeCombate(entrenador2);
 			}
 			else {
 				entrenador2.cambiarPokemon(entrenador2.getPokemonCombatiente());
-//				mostrarMensajeCambio(entrenador2);
+				mostrarMensajeCambio(entrenador2);
 			}
 		}
 	}

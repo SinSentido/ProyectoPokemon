@@ -13,7 +13,7 @@ public class Sano implements Estado, PresentadorSano{
 	}
 	
 	public void atacar(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
-//		mostrarMensajeAtaque(pokemonAtacante);
+		mostrarMensajeAtaque(pokemonAtacante);
 		pokemonAtacante.getProximoMovimiento().getCategoria().calcularDaño(pokemonAtacante, pokemonObjetivo);
 	}
 	

@@ -18,10 +18,10 @@ public class Paralizado implements Estado, PresentadorParalizado{
 	public void atacar(Pokemon pokemonAtacante, Pokemon pokemonObjetivo) {
 		
 		if(rdm.nextInt(2) == 0) { //Si la paralisis hace efecto
-//			mostrarMensajeAtacarParalizado(pokemonAtacante);
+			mostrarMensajeAtacarParalizado(pokemonAtacante);
 		}
 		else { //Si la paralisis no hace efecto
-//			mostrarMensajeAtaque(pokemonAtacante);
+			mostrarMensajeAtaque(pokemonAtacante);
 			pokemonAtacante.getProximoMovimiento().getCategoria().calcularDaño(pokemonAtacante, pokemonObjetivo);
 		}	
 	}

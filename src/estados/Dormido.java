@@ -22,7 +22,7 @@ public class Dormido implements Estado, PresentadorDormido{
 		if(contador == maxTurnosDorm) {
 			contador = 0;
 			pokemonAtacante.moveToSanoState();
-//			mostrarMensajeDespertar(pokemonAtacante);
+			mostrarMensajeDespertar(pokemonAtacante);
 			pokemonAtacante.getEstado().atacar(pokemonAtacante, pokemonObjetivo);
 		}
 		

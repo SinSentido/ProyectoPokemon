@@ -29,7 +29,7 @@ public class Especial implements Categoria, PresentadorFisicoEspecial{
 			
 			daño = aplicarFormulaDaño();
 			pokemonObjetivo.setVida(pokemonObjetivo.getVida()-(int)daño);
-//			mostrarMensajeDañoAtaque(pokemonObjetivo, daño);
+			mostrarMensajeDañoAtaque(pokemonObjetivo, daño);
 			
 			//Se comprueba si el pokemon se ha debilitado y si es el caso se cambia su estado.
 			if(pokemonObjetivo.getVida() <= 0) {
@@ -37,7 +37,7 @@ public class Especial implements Categoria, PresentadorFisicoEspecial{
 			}
 		}
 		else { //si falla el ataque
-//			mostrarMensajeFalloAtaque();
+			mostrarMensajeFalloAtaque();
 		}
 		
 	}
